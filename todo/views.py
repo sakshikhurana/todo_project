@@ -26,16 +26,19 @@ class TodoList(LoginRequiredMixin, ListView):
     model = TodoModel
     template_name = 'todo/list.html'
     context_object_name = 'todo_list'
-
+    
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(completed__isnull=True).order_by('created')
+        return queryset.filter(completed__isnull=True, user=self.request.user).order_by('created')
 
 
 class TodoDetail(LoginRequiredMixin, DetailView):
     model = TodoModel
     template_name = 'todo/detail.html'
     context_object_name = 'todo'
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
 
 class TodoComplete(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
@@ -52,11 +55,19 @@ class TodoEdit(LoginRequiredMixin, UpdateView):
     template_name = 'todo/create_update.html'
     form_class = TodoForm
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
+
 
 class TodoDelete(LoginRequiredMixin, DeleteView):
     model = TodoModel
     template_name = 'todo/deleted.html'
     success_url = reverse_lazy('todo:list')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
     
 
 
@@ -67,4 +78,4 @@ class TodoCompletedList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(completed__isnull=False).order_by('completed')
+        return queryset.filter(completed__isnull=False, user=self.request.user).order_by('completed')

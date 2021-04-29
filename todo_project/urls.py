@@ -23,7 +23,7 @@ urlpatterns = [
     # path('signup/', SignUpView.as_view(), name='signup'),
     path('signup/', signupuser, name='signup'),
     path('login/', LoginView.as_view(template_name='accounts/login.html'), name='login'),
-    path('logout', LogoutView.as_view(next_page='home'), name='logout'),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
     path('', home_view, name='home'),
     path('todo/', include('todo.urls'))
 ]
