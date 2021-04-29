@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Are you sure you want to delete?</h3>
+<form method='POST'>
+{%csrf_token%}
+<input type="submit" class='btn btn-danger' value="Delete">
+<a href="{% url 'todo:list' %}" class='btn btn-primary'>Cancel</a>
+</form>
+{% endblock content %}

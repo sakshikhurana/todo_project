@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{%if not form.instance.pk %}
+<h1>Create New Todo</h1>
+{% else %}
+<h1>Update Todo</h1>
+{% endif %}
+<form method='POST'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Submit">
+</form>
+{% endblock content %}

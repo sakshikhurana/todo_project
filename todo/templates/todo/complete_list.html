@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Completed List of Todos</h1>
+{% for todo in todo_complete_list %}
+<h3><a href="{% url 'todo:detail' pk=todo.pk %}">{{todo.title}}</a></h3>
+<h4>{{todo.memo}}</h4>
+<p>
+    <b>Created on {{todo.created}}</b><br>
+<b>Completed on {{todo.completed}}</b><br>
+</p>
+{% endfor %}
+{% endblock content %}
